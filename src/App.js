@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+
+import React, { useState, useEffect } from 'react';
+import Dashboard from './components/Dashboard';
+import './App.css'; // Import your Tailwind CSS styles
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (darkMode) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }, [darkMode]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Dashboard toggleDarkMode={() => setDarkMode(!darkMode)} />
     </div>
   );
 }
