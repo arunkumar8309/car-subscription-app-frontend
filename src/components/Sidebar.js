@@ -27,7 +27,11 @@ const Sidebar = () => {
             margin: 0,           // Removes margin for better fit
           }}
         >
-          {isOpen ? <HiX size={24} /> : <HiMenu size={24} />}
+          {isOpen ? (
+            <HiX size={24} className="text-gray-700 dark:text-white" />
+          ) : (
+            <HiMenu size={24} className="text-gray-700 dark:text-white" />
+          )}
         </button>
         <h1
           className={`text-xl text-gray-700 dark:text-white transition-opacity ${
@@ -47,7 +51,7 @@ const Sidebar = () => {
               }`
             }
           >
-            <FaHome size={24} />
+            <FaHome size={24} className="text-gray-700 dark:text-white" />
             <span className={`${isOpen ? "block" : "hidden"}`}>Home</span>
           </NavLink>
         </li>
@@ -60,7 +64,7 @@ const Sidebar = () => {
               }`
             }
           >
-            <FaUsers size={24} />
+            <FaUsers size={24} className="text-gray-700 dark:text-white" />
             <span className={`${isOpen ? "block" : "hidden"}`}>Users</span>
           </NavLink>
         </li>
@@ -73,7 +77,7 @@ const Sidebar = () => {
               }`
             }
           >
-            <FaUser size={24} />
+            <FaUser size={24} className="text-gray-700 dark:text-white" />
             <span className={`${isOpen ? "block" : "hidden"}`}>User</span>
           </NavLink>
         </li>
