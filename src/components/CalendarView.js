@@ -28,13 +28,14 @@ const CalendarView = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    if(userId){
     const fetchUserDetails = async () => {
       try {
         const response = await getSubscriptionDetails(userId);
         
         // Map the services data to create event objects
         setEvents(response.data.services.map(service => ({
-          title: `${service.type === 'interior' ? 'Interior Cleaning' : 'Exterior Cleaning'}`,
+          title: `${service.type === 'Interior Cleaning' ? 'Interior Cleaning' : 'Exterior Cleaning'}`,
           start: service.date,
           color: getColorByType(service.type),
           allDay: false // Ensure the event shows up as time-specific, not all-day
@@ -47,13 +48,15 @@ const CalendarView = () => {
     };
 
     fetchUserDetails();
+  }
+
   }, [userId]);
 
   const handleDateClick = (info) => {
     alert(`Date clicked: ${info.dateStr}`);
   };
 
-  if (loading) return <p className="text-center">Loading...</p>;
+  if (loading) return <p className="text-center"></p>;
   if (error) return <p className="text-red-500 text-center">{error}</p>;
 
   return (

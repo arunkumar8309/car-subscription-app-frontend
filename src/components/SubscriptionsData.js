@@ -9,7 +9,7 @@ const formatDate = (dateString) => {
   return `${day}/${month}/${year}`;
 };
 
-const SubscriptionsData = () => {
+const SubscriptionsData = ({ subscriptions }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -28,7 +28,7 @@ const SubscriptionsData = () => {
     };
 
     fetchData();
-  }, []);
+  }, [subscriptions]);
 
   useEffect(() => {
     // Function to update the theme state when theme changes

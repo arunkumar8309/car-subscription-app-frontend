@@ -20,6 +20,7 @@ const UserScheduleView = () => {
 
   // Fetch user details when component mounts or userId changes
   useEffect(() => {
+    if(userId){
     const fetchUserDetails = async () => {
       try {
         const response = await getSubscriptionDetails(userId);
@@ -42,6 +43,7 @@ const UserScheduleView = () => {
     };
 
     fetchUserDetails();
+  }
   }, [userId]);
 
   // Handle navigation to the users list
@@ -49,8 +51,8 @@ const UserScheduleView = () => {
     navigate('/users');    
   };
 
-  if (loading) return <p className="text-center text-gray-900 dark:text-gray-100">Loading...</p>;
-  if (error) return (
+  // if (loading) return <p className="text-center text-gray-900 dark:text-gray-100">Loading...</p>;
+  if (error || loading) return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100 dark:bg-gray-900">
       <svg
         xmlns="http://www.w3.org/2000/svg"

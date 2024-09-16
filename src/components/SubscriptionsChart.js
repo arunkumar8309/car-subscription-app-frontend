@@ -1,6 +1,7 @@
+// src/components/SubscriptionsChart.js
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import { SubscriptionsCount } from '../api/apiService'; // Import your API function
+import { SubscriptionsCount } from '../api/apiService';
 import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, PointElement, CategoryScale, LinearScale } from 'chart.js';
 
 ChartJS.register(Title, Tooltip, Legend, LineElement, PointElement, CategoryScale, LinearScale);
@@ -13,7 +14,7 @@ const formatDate = (dateString) => {
   return `${day}/${month}/${year}`;
 };
 
-const SubscriptionsChart = () => {
+const SubscriptionsChart = ({ subscriptions }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,7 +22,7 @@ const SubscriptionsChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await SubscriptionsCount(); // Call your API method
+        const response = await SubscriptionsCount(); // Call your API method to fetch data
         setData(response.data);
       } catch (err) {
         setError(err);
@@ -31,7 +32,7 @@ const SubscriptionsChart = () => {
     };
 
     fetchData();
-  }, []);
+  }, [subscriptions]); 
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
