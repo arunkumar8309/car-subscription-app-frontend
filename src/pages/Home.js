@@ -10,13 +10,12 @@ const Home = () => {
 
   return (
     <div className="text-gray-900 dark:text-white">
-       {/* Go Back button (Top Right) */}
-       <div className="top-[0px] right-[-205px]">
+         <div className="absolute top-[80px] right-[85px] mb-[50px]">
           <button 
-            onClick={handleBack}
+            onClick={() => handleBack()}
             className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
           >
-            Subscription List View
+             Subscription List View
           </button>
         </div>
       <Subscripation/>
