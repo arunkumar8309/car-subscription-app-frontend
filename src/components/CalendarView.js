@@ -14,6 +14,8 @@ const getColorByType = (type) => {
       return '#FF9F00'; // Color for interior cleaning
     case 'exterior':
       return '#00A3E0'; // Color for exterior cleaning
+    case 'off':
+      return '#CCCCCC'; // Color for off day
     case 'completed':
       return '#4CAF50'; // Color for completed cleaning
     default:
@@ -28,28 +30,27 @@ const CalendarView = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if(userId){
-    const fetchUserDetails = async () => {
-      try {
-        const response = await getSubscriptionDetails(userId);
-        
-        // Map the services data to create event objects
-        setEvents(response.data.services.map(service => ({
-          title: `${service.type === 'Interior Cleaning' ? 'Interior Cleaning' : 'Exterior Cleaning'}`,
-          start: service.date,
-          color: getColorByType(service.type),
-          allDay: false // Ensure the event shows up as time-specific, not all-day
-        })));
-      } catch (error) {
-        setError('Failed to fetch user details.');
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (userId) {
+      const fetchUserDetails = async () => {
+        try {
+          const response = await getSubscriptionDetails(userId);
+          
+          // Map the services data to create event objects
+          setEvents(response.data.services.map(service => ({
+            title: `${service.type === 'Interior Cleaning' ? 'Interior Cleaning' : service.type === 'Exterior Cleaning' ? 'Exterior Cleaning' : 'Off Day'}`,
+            start: service.date,
+            color: getColorByType(service.type.toLowerCase()), // Convert type to lowercase for color matching
+            allDay: false // Ensure the event shows up as time-specific, not all-day
+          })));
+        } catch (error) {
+          setError('Failed to fetch user details.');
+        } finally {
+          setLoading(false);
+        }
+      };
 
-    fetchUserDetails();
-  }
-
+      fetchUserDetails();
+    }
   }, [userId]);
 
   const handleDateClick = (info) => {
@@ -86,7 +87,6 @@ const CalendarView = () => {
           events={events}
           dateClick={handleDateClick} // Handle date clicks
           eventContent={renderEventContent} // Custom rendering of event content
-          // This callback allows you to access the calendar view and modify it
           datesSet={(dateInfo) => {
             const { start, end } = dateInfo.view;
             // Optionally add logic to modify or filter dates, if needed
